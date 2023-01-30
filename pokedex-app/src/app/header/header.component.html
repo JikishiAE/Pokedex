@@ -1,0 +1,16 @@
+<header [ngClass]="{'sticky': scrolled}" style="z-index: 60;">
+    <img src="./../assets/img/bg.jpg" alt="Fondo" class="banner">
+    <a href="#" class="logo">Pokedex.</a>
+    <div id="menu_movil" class="toggle" (click)="abrirMenu()">
+      <i class="fa fa-bars fa-3x" aria-hidden="true"></i>
+    </div>
+    <nav id="linksMenu">
+      <ul>
+        <li><a [routerLink]="['/']" routerLinkActive="active">Inicio</a></li>
+        <li *ngIf="osc_bla"><a (click)="cambiarFondo()"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+        <!-- <li><a href="#">Equipo</a></li> -->
+        <li *ngIf="!osc_bla"><a (click)="cambiarFondo()"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
+        
+      </ul>
+    </nav>
+  </header>
