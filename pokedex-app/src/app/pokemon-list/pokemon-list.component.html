@@ -2,33 +2,87 @@
     <div class="box" 
     *ngFor="let pokemon of pokemons | paginate: { itemsPerPage: 100, currentPage: page, totalItems: totalPokemons }"
     >
-        <div (click)="openModal(pokemon.name)">
+        <div (click)="openModal(pokemon.name)" class="backPokeball">
             <img [src]="pokemon.sprites.front_default" alt="{{pokemon.name}}">
             <h3 class="capitalize">{{ pokemon.name }}</h3>
+            
         </div>
     </div>
 </div>
 
 <div id="modal_Pokemon" class="modal fade" aria-hidden="true" tabindex="-1">
     <div class="modal-dialog modal-fullscreen">
-      <div class="modal-content" *ngIf="pokemonData.name != ''">
+      <div class="modal-content angled-gradient" *ngIf="pokemonData.name != ''">
         <div class="modal-header">
           <h1 class="modal-title fs-5 capitalize" id="exampleModalToggleLabel2">{{ pokemonData.name }}</h1>
           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
             <div class="row">
-                <h3>Habilidades</h3>
+                <div class="col-4"></div>
+                <div class="col-4">
 
-                <div class="col-12" *ngFor="let ability of pokemonData.abilities">
-                    <p>{{ability.ability.name}}</p>
+                    <div id="carouselExampleAutoplaying" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                          <div class="carousel-item active" *ngIf="pokemonData.sprites.front_default">
+                            <img src="{{pokemonData.sprites.front_default}}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item" *ngIf="pokemonData.sprites.back_default">
+                            <img src="{{pokemonData.sprites.back_default}}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item" *ngIf="pokemonData.sprites.front_shiny">
+                            <img src="{{pokemonData.sprites.front_shiny}}" class="d-block w-100" alt="...">
+                          </div>
+                          <div class="carousel-item" *ngIf="pokemonData.sprites.back_shiny">
+                            <img src="{{pokemonData.sprites.back_shiny}}" class="d-block w-100" alt="...">
+                          </div>
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                          <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                          <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                          <span class="visually-hidden">Next</span>
+                        </button>
+                    </div>
+
+                </div>
+                <div class="col-4"></div>
+            </div>
+
+            <div id="collapseExample">
+                <div class="card card-body">
+                    <h3>Habilidades</h3>
+
+                    <div class="list-group">
+                        <div *ngFor="let ability of pokemonData.abilities">
+                            <a href="{{ability.ability.url}}" class="capitalize list-group-item list-group-item-action">{{ability.ability.name}}</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="collapseJuegos">
+                <div class="card card-body">
+                    <h3>Juegos</h3>
+
+                    <div class="list-group">
+                        <div *ngFor="let game of pokemonData.game_indices">
+                            <a href="{{game.version.url}}" class="capitalize list-group-item list-group-item-action">{{game.version.name}}</a>
+                        </div>
+                    </div>
+                    
                 </div>
             </div>
           
         </div>
-        <!-- <div class="modal-footer">
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div> -->
+        <div class="modal-footer">
+            <button type="button" class="btn btn-success" (click)="AgregarQuitarFav(pokemonData.name)">
+                <i class="fa fa-heart" aria-hidden="true"></i>
+            </button>
+        </div>
       </div>
     </div>
 </div>

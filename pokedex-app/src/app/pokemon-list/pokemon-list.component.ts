@@ -11,9 +11,12 @@ import * as bootstrap from 'bootstrap';
 export class PokemonListComponent implements OnInit {
 
   pokemons: any[] = [];
+  pokemonsFavs: any[] = [];
   pokemonData = {
     name: '',
-    abilities: [{ability: {name: ''}}]
+    abilities: [{ability: {name: '', url: ''}}],
+    sprites: {front_default: '', back_default: '', front_shiny: '', back_shiny: ''},
+    game_indices: [{version: {name: '', url: ''}}]
   };
   //existeData = 0;
   page = 1;
@@ -53,7 +56,9 @@ export class PokemonListComponent implements OnInit {
   openModal(name: string){
     this.pokemonData = {
       name: '',
-      abilities: [{ability: {name: ''}}]
+      abilities: [{ability: {name: '', url: ''}}],
+      sprites: {front_default: '', back_default: '', front_shiny: '', back_shiny: ''},
+      game_indices: [{version: {name: '', url: ''}}]
     };
     //this.existeData = 0;
 
@@ -79,5 +84,40 @@ export class PokemonListComponent implements OnInit {
     //console.log(this.existeData);
     console.log(this.pokemonData);
     
+  }
+
+  AgregarQuitarFav(name: string){
+    var indice = -1;
+    var mensaje = "";
+
+    this.pokemonsFavs = Array.from(JSON.parse(localStorage.getItem('Favoritos') || '{}'));
+    
+    this.pokemons.forEach((element) => {
+      if(element.name == name){
+
+        this.pokemonsFavs.forEach((elmnt) => {
+          if(elmnt.name == name){
+            indice = this.pokemonsFavs.indexOf(elmnt);
+            this.pokemonsFavs.splice(indice, 1);
+            mensaje = "Pokémon eliminado de favoritos";
+          }
+        })
+
+        // if(this.pokemonsFavs.find(element.name) != undefined){
+        //   indice = this.pokemonsFavs.findIndex(element.name);
+        //   this.pokemonsFavs = this.pokemonsFavs.splice(indice, 1);
+        // }
+        // console.log(this.pokemonsFavs);
+
+        if(indice == (-1)){
+          this.pokemonsFavs.push(element);
+          mensaje = "Pokémon agregado a favoritos";
+        }
+        
+        localStorage.setItem('Favoritos', JSON.stringify(this.pokemonsFavs));
+
+        alert(mensaje);
+      }
+    })
   }
 }
