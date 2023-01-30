@@ -10,6 +10,8 @@
 .pokemon-grid .box{
     width: 100%;
     height: 300px;
+    border-radius: 0.5rem;
+    background-color: #a6a4a4;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
     display: grid;
     text-align: center;
@@ -19,8 +21,26 @@
     max-width: 100px;
     display: block;
     margin: 0 auto;
+    transform: scale(var(--escala, 1));
+    transition: transform 0.25s;
+}
+
+.pokemon-grid .box:hover{
+    --escala: 1.2;
+    cursor: pointer;
+    background-color: #c5c5c5;
+}
+
+.capitalize{
+    text-transform: capitalize;
 }
 
 pagination-controls{
     text-align: center;
+}
+
+@media (max-width: 600px){
+    .pokemon-grid{
+        grid-template-columns: repeat(auto-fit, minmax(45%, 1fr));
+    }
 }

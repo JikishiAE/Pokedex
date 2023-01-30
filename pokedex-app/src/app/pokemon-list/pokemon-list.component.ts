@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ElementRef } from '@angular/core';
 import { ApiService } from '../services/api.service';
+import { Modal } from 'bootstrap';
+import * as bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -9,11 +11,18 @@ import { ApiService } from '../services/api.service';
 export class PokemonListComponent implements OnInit {
 
   pokemons: any[] = [];
+  pokemonData = {
+    name: '',
+    abilities: [{ability: {name: ''}}]
+  };
+  //existeData = 0;
   page = 1;
   totalPokemons: number | undefined;
+  modalPokemon: Modal | undefined;
 
   constructor(
-    private apiService: ApiService
+    private apiService: ApiService,
+    private el: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -38,5 +47,37 @@ export class PokemonListComponent implements OnInit {
         });
       }
     )
+  }
+
+  // Abrir Modal de información
+  openModal(name: string){
+    this.pokemonData = {
+      name: '',
+      abilities: [{ability: {name: ''}}]
+    };
+    //this.existeData = 0;
+
+    this.pokemons.forEach((element) => {
+      if(element.name == name){
+        this.pokemonData = element;
+      }
+    })
+
+    //this.existeData = Object.keys(this.pokemonData).length;
+
+    var Modal = this.el.nativeElement.querySelector("#modal_Pokemon");
+
+    if(Modal && (this.pokemonData.name != '')){
+      this.modalPokemon = new bootstrap.Modal(Modal,
+      {
+        keyboard: false
+      })
+
+      this.modalPokemon.show();
+    }
+
+    //console.log(this.existeData);
+    console.log(this.pokemonData);
+    
   }
 }
