@@ -1,5 +1,5 @@
-import { Component, OnInit, ElementRef } from '@angular/core';
-import { ApiService } from '../services/api.service';
+import { Component, OnInit, ElementRef, Input } from '@angular/core';
+import { Router } from '@angular/router'
 import { Modal } from 'bootstrap';
 import * as bootstrap from 'bootstrap';
 
@@ -10,46 +10,31 @@ import * as bootstrap from 'bootstrap';
 })
 export class PokemonListComponent implements OnInit {
 
-  pokemons: any[] = [];
+  @Input() pokemons: any[] = [];
   pokemonsFavs: any[] = [];
+  @Input() page = 1;
+  @Input() totalPokemons: number | undefined;
   pokemonData = {
     name: '',
     abilities: [{ability: {name: '', url: ''}}],
     sprites: {front_default: '', back_default: '', front_shiny: '', back_shiny: ''},
-    game_indices: [{version: {name: '', url: ''}}]
+    game_indices: [{version: {name: '', url: ''}}],
+    types: [{type: {name: ''}}]
   };
   //existeData = 0;
-  page = 1;
-  totalPokemons: number | undefined;
+  
   modalPokemon: Modal | undefined;
 
   constructor(
-    private apiService: ApiService,
-    private el: ElementRef
+    private el: ElementRef,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
     
-    this.getPokemons();
+    
     //console.log(this.pokemons);
     
-  }
-
-  // Obtener Pokemons
-  getPokemons(){
-    this.apiService.getPokemon(100, ((this.page - 1) * 100)).subscribe(
-      (res: any) => {
-        this.totalPokemons = res.count;
-
-        res.results.forEach((element: { name: string; }) => {
-          this.apiService.getPokeData(element.name).subscribe(
-            (uniqResponse: any) => {
-              this.pokemons.push(uniqResponse);
-            }
-          )
-        });
-      }
-    )
   }
 
   // Abrir Modal de información
@@ -58,7 +43,8 @@ export class PokemonListComponent implements OnInit {
       name: '',
       abilities: [{ability: {name: '', url: ''}}],
       sprites: {front_default: '', back_default: '', front_shiny: '', back_shiny: ''},
-      game_indices: [{version: {name: '', url: ''}}]
+      game_indices: [{version: {name: '', url: ''}}],
+      types: [{type: {name: ''}}]
     };
     //this.existeData = 0;
 
@@ -82,7 +68,7 @@ export class PokemonListComponent implements OnInit {
     }
 
     //console.log(this.existeData);
-    console.log(this.pokemonData);
+    //console.log(this.pokemonData);
     
   }
 
@@ -117,6 +103,16 @@ export class PokemonListComponent implements OnInit {
         localStorage.setItem('Favoritos', JSON.stringify(this.pokemonsFavs));
 
         alert(mensaje);
+
+        if(this.router.url == "/favorites"){
+          // this.router.navigateByUrl('/favorites', {skipLocationChange: true}).then(
+          //   ()=> this.router.navigate(["favorites"])
+          // );
+          //this.router.navigate(["/favorites"]);
+          location.reload();
+          
+        }
+        
       }
     })
   }

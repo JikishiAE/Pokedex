@@ -1,8 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { PokemonsComponent } from './pokemons/pokemons.component'
+import { PokemonsFavComponent } from './pokemons-fav/pokemons-fav.component'
 
 const routes: Routes = [
-                          { path: '', loadChildren: () => import('./app.module').then(m => m.AppModule) }
+                          { path: '', component: PokemonsComponent },
+                          { path: 'favorites', component: PokemonsFavComponent }
                         ];
 
 @NgModule({

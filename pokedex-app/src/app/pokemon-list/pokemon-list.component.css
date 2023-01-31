@@ -10,8 +10,8 @@
 .pokemon-grid .box{
     width: 100%;
     height: 300px;
-    border-radius: 0.5rem;
-    background-color: #a6a4a4;
+    border-radius: 50%;
+    background-color: #595959;
     box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.3);
     display: grid;
     text-align: center;
@@ -21,7 +21,7 @@
     background-size: contain;
 }
 
-.pokemon-grid .box img{
+.pokemon-grid .box .backPokeball > img{
     max-width: 100px;
     display: block;
     margin: 0 auto;
@@ -32,7 +32,17 @@
 .pokemon-grid .box:hover{
     --escala: 1.2;
     cursor: pointer;
-    background-color: #c5c5c5;
+    background-color: #9c9c9c;
+}
+
+.pokemon-types{
+    display: grid;
+    grid-gap: 5px;
+    grid-template-columns: repeat(auto-fit, minmax(45%, 0.5fr));
+}
+
+.align{
+    text-align: center;
 }
 
 .NormalSize{
@@ -48,16 +58,12 @@
 }
 
 .angled-gradient {
-    background: linear-gradient(70deg, pink, #fd1414);
+    background: linear-gradient(70deg, #e1e1e1, #919191);
 }
 
-#collapseJuegos{
+/* #collapseJuegos{
     margin-top: 20px;
-}
-
-pagination-controls{
-    text-align: center;
-}
+} */
 
 @media (max-width: 600px){
     .pokemon-grid{

@@ -7,6 +7,7 @@
     <nav id="linksMenu">
       <ul>
         <li><a [routerLink]="['/']" routerLinkActive="active">Inicio</a></li>
+        <li><a [routerLink]="['favorites']" routerLinkActive="active">Favoritos</a></li>
         <li *ngIf="osc_bla"><a (click)="cambiarFondo()"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>
         <!-- <li><a href="#">Equipo</a></li> -->
         <li *ngIf="!osc_bla"><a (click)="cambiarFondo()"><i class="fa fa-power-off" aria-hidden="true"></i></a></li>

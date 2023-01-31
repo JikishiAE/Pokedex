@@ -13,7 +13,7 @@ export class ApiService {
 
   //Obtener todos los pokemon necesarios
   getPokemon(limit: number, offset: number) {
-    console.log("limit: " + limit + ", offset: " + offset);
+    //console.log("limit: " + limit + ", offset: " + offset);
     
     return this.http.get('https://pokeapi.co/api/v2/pokemon?limit=' + limit + '&offset=' + offset);
   }
